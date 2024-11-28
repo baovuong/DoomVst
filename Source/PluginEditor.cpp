@@ -11,9 +11,6 @@
 #include "doomgeneric.h"
 #include "doomgeneric_vst.h"
 
-#define BEEG_RESX 640
-#define BEEG_RESY 480
-
 extern "C" {
     void D_DoomLoop_SingleFrame(void);
 }
