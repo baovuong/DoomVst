@@ -23,6 +23,10 @@ DoomVstAudioProcessorEditor::DoomVstAudioProcessorEditor (DoomVstAudioProcessor&
     // editor's size to whatever you need it to be.
     if (audioProcessor.wadFound) {
         Timer::startTimerHz(FRAMES_PER_SEC);
+        //frameBuffer.setBufferedToImage(true);
+        juce::Image image(juce::Image::PixelFormat::ARGB, DOOMGENERIC_RESX, DOOMGENERIC_RESY, false);
+        frameBuffer.setImage(image);
+        frameBuffer.setSize(DOOMGENERIC_RESX, DOOMGENERIC_RESY);
         addAndMakeVisible(frameBuffer);
     }
     else {
@@ -47,15 +51,14 @@ void DoomVstAudioProcessorEditor::paint (juce::Graphics& g)
         return;
 
     D_DoomLoop_SingleFrame();
-    juce::Image image(juce::Image::PixelFormat::ARGB, DOOMGENERIC_RESX, DOOMGENERIC_RESY, false);
+    juce::Image::BitmapData data(frameBuffer.getImage(), juce::Image::BitmapData::writeOnly);
+    
     for (int y = 0; y < DOOMGENERIC_RESY; y++) {
         for (int x = 0; x < DOOMGENERIC_RESX; x++) {
             uint32_t pixel = mainFrameBuffer[y * DOOMGENERIC_RESX + x] | 0xFF000000UL;
-
-            image.setPixelAt(x, y, juce::Colour(pixel));
+            data.setPixelColour(x, y, juce::Colour(pixel));
         }
     }
-    frameBuffer.setImage(image);
 }
 
 void DoomVstAudioProcessorEditor::resized()

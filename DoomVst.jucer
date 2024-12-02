@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               compilerFlagSchemes="" pluginFormats="buildAU,buildLV2,buildStandalone,buildVST3"
-              lv2Uri="https://github.com/michael-truscott/DoomVst">
+              lv2Uri="https://github.com/michael-truscott/DoomVst" version="1.0.1">
   <MAINGROUP id="Ibweo2" name="DoomVst">
     <GROUP id="{9AE04C06-0ED7-DDC4-0091-80C58C590FD1}" name="Source">
       <FILE id="SSG0bd" name="doomgeneric_vst.h" compile="0" resource="0"

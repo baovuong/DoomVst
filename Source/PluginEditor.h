@@ -30,6 +30,7 @@ private:
     DoomVstAudioProcessor& audioProcessor;
     juce::DrawableImage frameBuffer;
     juce::Label errorMessage;
+    juce::Label testMessage;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoomVstAudioProcessorEditor)
 };

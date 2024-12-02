@@ -11,7 +11,12 @@
 #include "PluginMain.h"
 #include "doomgeneric_vst.h"
 #include "doomkeys.h"
+#include <algorithm>
+#include <iostream>
 #include <queue>
+#include <map>
+#include <JuceHeader.h>
+
 
 std::queue<keyEvent_t> keyEventQueue;
 
@@ -58,6 +63,28 @@ DoomVstAudioProcessor::DoomVstAudioProcessor()
 {
     myargc = 0;
     myargv = nullptr;
+
+    // defining note to control map
+    noteControlMap[48] = KEY_LEFTARROW;
+    noteControlMap[50] = KEY_UPARROW;
+    noteControlMap[52] = KEY_RIGHTARROW;
+    noteControlMap[53] = KEY_DOWNARROW;
+    noteControlMap[60] = KEY_ENTER;
+    noteControlMap[62] = KEY_FIRE;
+    noteControlMap[64] = KEY_USE;
+    noteControlMap[65] = KEY_RSHIFT;
+
+    controlTextMap[KEY_LEFTARROW] = "Left Arrow";
+    controlTextMap[KEY_UPARROW] = "Up Arrow";
+    controlTextMap[KEY_RIGHTARROW] = "Right Arrow";
+    controlTextMap[KEY_DOWNARROW] = "Down Arrow";
+    controlTextMap[KEY_ENTER] = "Enter";
+    controlTextMap[KEY_FIRE] = "Fire";
+    controlTextMap[KEY_USE] = "Use";
+    controlTextMap[KEY_RSHIFT] = "Right Shift";
+    
+
+    logControls();
 
     GameMission_t mission = (GameMission_t)0;
     if (D_FindIWAD(IWAD_MASK_DOOM, &mission) == NULL) {
@@ -193,7 +220,7 @@ void DoomVstAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    int i = 0;
+    //int i = 0;
     auto nextMidiMessage = midiMessages.findNextSamplePosition(0);
     while (nextMidiMessage != midiMessages.cend()) {
         auto msg = (*nextMidiMessage).getMessage();
@@ -209,32 +236,10 @@ void DoomVstAudioProcessor::processMidiNote(juce::MidiMessage& msg)
 
     int note = msg.getNoteNumber();
     int isOn = msg.isNoteOn();
-    switch (note) {
-    case 48: // C3
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_LEFTARROW });
-        break;
-    case 50: // D3
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_UPARROW });
-        break;
-    case 52: // E3
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_RIGHTARROW });
-        break;
-    case 53: // F3
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_DOWNARROW });
-        break;
 
-    case 60: // C4
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_ENTER });
-        break;
-    case 62: // D4
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_FIRE });
-        break;
-    case 64: // E4
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_USE });
-        break;
-    case 65: // F4
-        keyEventQueue.push(keyEvent_t{ isOn, KEY_RSHIFT });
-        break;
+    // check if note is in the map
+    if (noteControlMap.count(note) > 0) {
+        keyEventQueue.push(keyEvent_t{ isOn, noteControlMap[note]});
     }
 }
 
@@ -261,6 +266,15 @@ void DoomVstAudioProcessor::setStateInformation (const void* data, int sizeInByt
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void DoomVstAudioProcessor::logControls()
+{
+    std::map<unsigned int, unsigned char>::iterator it;
+    for (auto const& [key, val] : noteControlMap)
+    {
+        std::cout << key << ":" << controlTextMap[val] << std::endl;
+    }
 }
 
 //==============================================================================

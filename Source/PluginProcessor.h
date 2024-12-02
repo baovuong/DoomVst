@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 
+#include <map>
+
 //==============================================================================
 /**
 */
@@ -60,6 +62,11 @@ public:
     bool wadFound;
 
 private:
+
+    void logControls();
+    std::map<unsigned int, unsigned char> noteControlMap;
+    std::map<unsigned char, juce::String> controlTextMap;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoomVstAudioProcessor)
 };
