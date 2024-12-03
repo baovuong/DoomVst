@@ -64,8 +64,21 @@ public:
 private:
 
     void logControls();
+
     std::map<unsigned int, unsigned char> noteControlMap;
     std::map<unsigned char, juce::String> controlTextMap;
+
+    //==============================================================================
+    //juce::AudioProcessorValueTreeState parameters;
+    juce::AudioParameterChoice* leftArrowNote;
+    juce::AudioParameterChoice* upArrowNote;
+    juce::AudioParameterChoice* rightArrowNote;
+    juce::AudioParameterChoice* downArrowNote;
+    juce::AudioParameterChoice* enterNote;
+    juce::AudioParameterChoice* fireNote;
+    juce::AudioParameterChoice* useNote;
+    juce::AudioParameterChoice* rshiftNote;
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoomVstAudioProcessor)
