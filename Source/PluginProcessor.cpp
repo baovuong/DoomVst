@@ -64,6 +64,16 @@ DoomVstAudioProcessor::DoomVstAudioProcessor()
     myargc = 0;
     myargv = nullptr;
 
+    // plugin parameters
+    addParameter(leftArrowNote = new juce::AudioParameterInt("leftArrowNote", "Left Arrow Note", 0, 11, 0));
+    addParameter(upArrowNote = new juce::AudioParameterInt("upArrowNote", "Up Arrow Note", 0, 11, 0));
+    addParameter(rightArrowNote = new juce::AudioParameterInt("rightArrowNote", "Right Arrow Note", 0, 11, 0));
+    addParameter(downArrowNote = new juce::AudioParameterInt("downArrowNote", "Down Arrow Note", 0, 11, 0));
+    addParameter(enterNote = new juce::AudioParameterInt("enterNote", "Enter Note", 0, 11, 0));
+    addParameter(fireNote = new juce::AudioParameterInt("fireNote", "Fire Note", 0, 11, 0));
+    addParameter(useNote = new juce::AudioParameterInt("useNote", "Use Note", 0, 11, 0));
+    addParameter(rshiftNote = new juce::AudioParameterInt("rshiftNote", "R Shift Note", 0, 11, 0));
+
     // defining note to control map
     noteControlMap[48] = KEY_LEFTARROW;
     noteControlMap[50] = KEY_UPARROW;
@@ -82,7 +92,6 @@ DoomVstAudioProcessor::DoomVstAudioProcessor()
     controlTextMap[KEY_FIRE] = "Fire";
     controlTextMap[KEY_USE] = "Use";
     controlTextMap[KEY_RSHIFT] = "Right Shift";
-    
 
     logControls();
 

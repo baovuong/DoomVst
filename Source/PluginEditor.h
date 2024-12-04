@@ -59,7 +59,7 @@ private:
     juce::ComboBox rshiftComboBox;
 
     void setupComboboxAndLabel(const char* name, juce::ComboBox& combobox, juce::Label& label, int selectedItem);
-
+    void comboboxChanged(const juce::String& name, juce::ComboBox& combobox);
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoomVstAudioProcessorEditor)

@@ -11,12 +11,11 @@
 #include "doomgeneric.h"
 #include "doomgeneric_vst.h"
 
-#define CONTROLS_HEIGHT 100
+#define CONTROLS_HEIGHT 50
 
 extern "C" {
     void D_DoomLoop_SingleFrame(void);
 }
-
 
 void setBoundsForCombobox(juce::ComboBox& combobox, int y, int width, int height, int padding, juce::ComboBox* previousComboBox)
 {
@@ -107,11 +106,6 @@ void DoomVstAudioProcessorEditor::resized()
     else {
         errorMessage.setBounds(0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY);
     }
-
-
-    
-
-    
 }
 
 void DoomVstAudioProcessorEditor::timerCallback()
@@ -139,4 +133,13 @@ void DoomVstAudioProcessorEditor::setupComboboxAndLabel(const char* name, juce::
     label.setText(name, juce::NotificationType::dontSendNotification);
     addAndMakeVisible(label);
     label.attachToComponent(&combobox, false);
+
+    combobox.onChange = [this, &combobox, &label] { 
+        this->comboboxChanged(label.getText(), combobox); 
+    };
+}
+
+void DoomVstAudioProcessorEditor::comboboxChanged(const juce::String& name, juce::ComboBox& combobox)
+{
+    juce::Logger::getCurrentLogger()->writeToLog(name + ": " + juce::String(combobox.getSelectedId()));
 }

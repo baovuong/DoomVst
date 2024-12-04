@@ -70,14 +70,14 @@ private:
 
     //==============================================================================
     //juce::AudioProcessorValueTreeState parameters;
-    juce::AudioParameterChoice* leftArrowNote;
-    juce::AudioParameterChoice* upArrowNote;
-    juce::AudioParameterChoice* rightArrowNote;
-    juce::AudioParameterChoice* downArrowNote;
-    juce::AudioParameterChoice* enterNote;
-    juce::AudioParameterChoice* fireNote;
-    juce::AudioParameterChoice* useNote;
-    juce::AudioParameterChoice* rshiftNote;
+    juce::AudioParameterInt* leftArrowNote;
+    juce::AudioParameterInt* upArrowNote;
+    juce::AudioParameterInt* rightArrowNote;
+    juce::AudioParameterInt* downArrowNote;
+    juce::AudioParameterInt* enterNote;
+    juce::AudioParameterInt* fireNote;
+    juce::AudioParameterInt* useNote;
+    juce::AudioParameterInt* rshiftNote;
 
 
     //==============================================================================
