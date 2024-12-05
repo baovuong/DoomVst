@@ -93,8 +93,6 @@ DoomVstAudioProcessor::DoomVstAudioProcessor()
     controlTextMap[KEY_USE] = "Use";
     controlTextMap[KEY_RSHIFT] = "Right Shift";
 
-    logControls();
-
     GameMission_t mission = (GameMission_t)0;
     if (D_FindIWAD(IWAD_MASK_DOOM, &mission) == NULL) {
         wadFound = false;

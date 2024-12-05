@@ -11,7 +11,7 @@
 #include "doomgeneric.h"
 #include "doomgeneric_vst.h"
 
-#define CONTROLS_HEIGHT 50
+#define CONTROLS_HEIGHT 60
 
 extern "C" {
     void D_DoomLoop_SingleFrame(void);
@@ -20,11 +20,11 @@ extern "C" {
 void setBoundsForCombobox(juce::ComboBox& combobox, int y, int width, int height, int padding, juce::ComboBox* previousComboBox)
 {
     combobox.setBounds(
-        padding + (previousComboBox != nullptr 
+        padding/4 + (previousComboBox != nullptr 
             ? previousComboBox->getBounds().getWidth() + previousComboBox->getBounds().getX() 
             : 0), 
         y,
-        width-padding,
+        width-padding/2,
         height);
 }
 
@@ -89,9 +89,9 @@ void DoomVstAudioProcessorEditor::resized()
     // subcomponents in your editor..
     if (audioProcessor.wadFound) {
         auto area = getLocalBounds();
-        int comboBoxPadding = 8;
-        int comboBoxWidth = DOOMGENERIC_RESX/8;
-        int comboBoxHeight = 20;
+        int comboBoxPadding = CONTROLS_HEIGHT;
+        int comboBoxWidth = DOOMGENERIC_RESX / 8;
+        int comboBoxHeight = CONTROLS_HEIGHT - 20;
         frameBuffer.setBounds(0, 0, DOOMGENERIC_RESX, DOOMGENERIC_RESY);
 
         setBoundsForCombobox(leftArrowComboBox, area.getHeight() - comboBoxHeight, comboBoxWidth, comboBoxHeight, comboBoxPadding, nullptr);
@@ -142,4 +142,5 @@ void DoomVstAudioProcessorEditor::setupComboboxAndLabel(const char* name, juce::
 void DoomVstAudioProcessorEditor::comboboxChanged(const juce::String& name, juce::ComboBox& combobox)
 {
     juce::Logger::getCurrentLogger()->writeToLog(name + ": " + juce::String(combobox.getSelectedId()));
+    // TODO update the plugin parameter associated with the combobox
 }
