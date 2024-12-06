@@ -59,20 +59,21 @@ DoomVstAudioProcessor::DoomVstAudioProcessor()
                      #endif
                        )
     , wadFound(false)
+    , parameters (*this, nullptr, juce::Identifier ("DoomVst"),
+    {
+        std::make_unique<juce::AudioParameterInt> ("leftArrowNote", "Left Arrow Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("upAr>rowNote", "Up Arrow Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("rightArrowNote", "Right Arrow Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("downArrowNote", "Down Arrow Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("enterNote", "Enter Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("fireNote", "Fire Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("useNote", "Use Note", 0, 11, 0),
+        std::make_unique<juce::AudioParameterInt> ("rshiftNote", "R Shift Note", 0, 11, 0)
+    })
 #endif
 {
     myargc = 0;
     myargv = nullptr;
-
-    // plugin parameters
-    addParameter(leftArrowNote = new juce::AudioParameterInt("leftArrowNote", "Left Arrow Note", 0, 11, 0));
-    addParameter(upArrowNote = new juce::AudioParameterInt("upArrowNote", "Up Arrow Note", 0, 11, 0));
-    addParameter(rightArrowNote = new juce::AudioParameterInt("rightArrowNote", "Right Arrow Note", 0, 11, 0));
-    addParameter(downArrowNote = new juce::AudioParameterInt("downArrowNote", "Down Arrow Note", 0, 11, 0));
-    addParameter(enterNote = new juce::AudioParameterInt("enterNote", "Enter Note", 0, 11, 0));
-    addParameter(fireNote = new juce::AudioParameterInt("fireNote", "Fire Note", 0, 11, 0));
-    addParameter(useNote = new juce::AudioParameterInt("useNote", "Use Note", 0, 11, 0));
-    addParameter(rshiftNote = new juce::AudioParameterInt("rshiftNote", "R Shift Note", 0, 11, 0));
 
     // defining note to control map
     noteControlMap[48] = KEY_LEFTARROW;
@@ -227,7 +228,6 @@ void DoomVstAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    //int i = 0;
     auto nextMidiMessage = midiMessages.findNextSamplePosition(0);
     while (nextMidiMessage != midiMessages.cend()) {
         auto msg = (*nextMidiMessage).getMessage();
@@ -243,6 +243,12 @@ void DoomVstAudioProcessor::processMidiNote(juce::MidiMessage& msg)
 
     int note = msg.getNoteNumber();
     int isOn = msg.isNoteOn();
+
+    // TODO do the midi note thing from parameters
+
+    // normalize midi note
+    int normalizedNote = note % 12;
+
 
     // check if note is in the map
     if (noteControlMap.count(note) > 0) {

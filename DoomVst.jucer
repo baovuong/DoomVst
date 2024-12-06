@@ -7,6 +7,10 @@
               lv2Uri="https://github.com/michael-truscott/DoomVst" version="1.0.1">
   <MAINGROUP id="Ibweo2" name="DoomVst">
     <GROUP id="{9AE04C06-0ED7-DDC4-0091-80C58C590FD1}" name="Source">
+      <FILE id="dO12OZ" name="LabeledComboBox.cpp" compile="1" resource="0"
+            file="Source/LabeledComboBox.cpp"/>
+      <FILE id="AjfjVO" name="LabeledComboBox.h" compile="0" resource="0"
+            file="Source/LabeledComboBox.h"/>
       <FILE id="SSG0bd" name="doomgeneric_vst.h" compile="0" resource="0"
             file="Source/doomgeneric_vst.h"/>
       <FILE id="zZegB1" name="doomgeneric_vst.c" compile="1" resource="0"

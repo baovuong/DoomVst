@@ -57,7 +57,6 @@ DoomVstAudioProcessorEditor::DoomVstAudioProcessorEditor (DoomVstAudioProcessor&
     setupComboboxAndLabel("Use", useComboBox, useLabel, 7);
     setupComboboxAndLabel("R Shift", rshiftComboBox, rshiftLabel, 8);
 
-
     setSize (DOOMGENERIC_RESX, DOOMGENERIC_RESY + CONTROLS_HEIGHT);
 }
 

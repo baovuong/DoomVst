@@ -69,7 +69,7 @@ private:
     std::map<unsigned char, juce::String> controlTextMap;
 
     //==============================================================================
-    //juce::AudioProcessorValueTreeState parameters;
+    juce::AudioProcessorValueTreeState parameters;
     juce::AudioParameterInt* leftArrowNote;
     juce::AudioParameterInt* upArrowNote;
     juce::AudioParameterInt* rightArrowNote;
